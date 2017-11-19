@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2017 at 10:50 AM
+-- Generation Time: Nov 19, 2017 at 11:32 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -39,8 +39,7 @@ CREATE TABLE `company` (
 
 CREATE TABLE `customer` (
   `Cust_ID` int(11) NOT NULL,
-  `CNIC` varchar(15) NOT NULL,
-  `C_Card` text
+  `CNIC` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -78,14 +77,20 @@ CREATE TABLE `dining` (
 --
 
 CREATE TABLE `employee` (
-  `Emp_ID` varchar(5) NOT NULL,
-  `Type` text NOT NULL,
-  `Department` text NOT NULL,
+  `Emp_ID` int(11) NOT NULL,
+  `Department` varchar(25) NOT NULL,
   `Salary` int(11) NOT NULL,
   `DOB` date NOT NULL,
   `H_Date` date NOT NULL,
   `CNIC` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`Emp_ID`, `Department`, `Salary`, `DOB`, `H_Date`, `CNIC`) VALUES
+(39, 'GASTRONOMY', 321, '2017-11-08', '2017-11-19', 'b');
 
 -- --------------------------------------------------------
 
@@ -134,9 +139,18 @@ CREATE TABLE `facilitystatus` (
 --
 
 CREATE TABLE `manager` (
-  `Emp_ID` varchar(5) NOT NULL,
-  `Department` varchar(15) NOT NULL
+  `Emp_ID` int(5) NOT NULL,
+  `Department` varchar(15) NOT NULL,
+  `Username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `manager`
+--
+
+INSERT INTO `manager` (`Emp_ID`, `Department`, `Username`, `password`) VALUES
+(39, 'GASTRONOMY', 'asd', 'asd');
 
 -- --------------------------------------------------------
 
@@ -180,7 +194,7 @@ CREATE TABLE `person` (
   `Address` varchar(25) NOT NULL,
   `PhoneNumber` varchar(15) NOT NULL,
   `Email` varchar(25) NOT NULL,
-  `CreditCardNo` varchar(12) NOT NULL
+  `CreditCardNo` varchar(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -188,11 +202,7 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`CNIC`, `FNAME`, `LNAME`, `Address`, `PhoneNumber`, `Email`, `CreditCardNo`) VALUES
-('1221', 'bi ', 'k', 'a', '12', 'a@gmail.com', '123'),
-('1234', 'muhamamd ', 'ahmed', 'GOthIXmail', '123456', 'a@gmail.com', '11111'),
-('34', 'b ', 's', 'a', '43', 'a@gmail.com', '121'),
-('asad', 'ahmed ', 'bilal', '1234', '1234', 'a@gmail.com', '121212'),
-('m', 'b ', 'n', 'h', '1', 'a@gmail.com', '12');
+('b', 'bilal ', 'bilal', 'asd', '123', 'aa@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -206,6 +216,13 @@ CREATE TABLE `room` (
   `Capacity` int(11) NOT NULL,
   `Cost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`Room_ID`, `Type`, `Capacity`, `Cost`) VALUES
+(1, 'Normal', 12, 1234);
 
 -- --------------------------------------------------------
 
@@ -352,6 +369,16 @@ ALTER TABLE `servicestatus`
 --
 ALTER TABLE `customer`
   MODIFY `Cust_ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `Emp_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+--
+-- AUTO_INCREMENT for table `room`
+--
+ALTER TABLE `room`
+  MODIFY `Room_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
