@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2017 at 11:32 AM
+-- Generation Time: Nov 27, 2017 at 08:19 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -31,6 +31,13 @@ CREATE TABLE `company` (
   `discount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`name`, `discount`) VALUES
+('PSO', 5);
+
 -- --------------------------------------------------------
 
 --
@@ -42,6 +49,15 @@ CREATE TABLE `customer` (
   `CNIC` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`Cust_ID`, `CNIC`) VALUES
+(9, '1235'),
+(10, '1235'),
+(11, '1235');
+
 -- --------------------------------------------------------
 
 --
@@ -52,6 +68,14 @@ CREATE TABLE `customer_company` (
   `Cust_ID` int(11) NOT NULL,
   `Company` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_company`
+--
+
+INSERT INTO `customer_company` (`Cust_ID`, `Company`) VALUES
+(10, 'PSO'),
+(11, 'PSO');
 
 -- --------------------------------------------------------
 
@@ -70,6 +94,13 @@ CREATE TABLE `dining` (
   `Cust_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dining`
+--
+
+INSERT INTO `dining` (`Res_ID`, `Type`, `no_of_ppl`, `B_Date`, `E_Date`, `Name`, `Price`, `Cust_ID`) VALUES
+(1, 'Buffet', 54, '2017-11-23', '2017-11-20', 'NoName', 1085, 11);
+
 -- --------------------------------------------------------
 
 --
@@ -77,7 +108,7 @@ CREATE TABLE `dining` (
 --
 
 CREATE TABLE `employee` (
-  `Emp_ID` int(11) NOT NULL,
+  `Emp_ID` int(5) NOT NULL,
   `Department` varchar(25) NOT NULL,
   `Salary` int(11) NOT NULL,
   `DOB` date NOT NULL,
@@ -90,7 +121,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`Emp_ID`, `Department`, `Salary`, `DOB`, `H_Date`, `CNIC`) VALUES
-(39, 'GASTRONOMY', 321, '2017-11-08', '2017-11-19', 'b');
+(1, 'EVENTS', 1234, '2017-11-06', '2017-11-26', '11111-1111111-1'),
+(3, 'EVENTS', 1234, '2017-11-06', '2017-11-26', '22222-2222222-2'),
+(4, 'GASTRONOMY', 456, '2017-11-07', '2017-11-26', '12212-1111111-1'),
+(5, 'GASTRONOMY', 3456, '2017-11-06', '2017-11-26', '44444-4444444-4'),
+(6, 'ROOM RESERVATIONS', 12345, '2017-11-07', '2017-11-26', '88888-8888888-8');
 
 -- --------------------------------------------------------
 
@@ -109,6 +144,13 @@ CREATE TABLE `event` (
   `Hall_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`Event_ID`, `Type`, `B_Date`, `E_Date`, `Capacity`, `Price`, `Cust_ID`, `Hall_ID`) VALUES
+(1, 'Matrimony', '2017-11-23', '2017-11-30', 200, 800, 9, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -121,6 +163,16 @@ CREATE TABLE `facility` (
   `Cost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `facility`
+--
+
+INSERT INTO `facility` (`Fac_ID`, `Name`, `Cost`) VALUES
+(1, 'Swimming', 20),
+(2, 'Fitness Center', 45),
+(3, 'Indoor Sports', 35),
+(4, 'Spa', 25);
+
 -- --------------------------------------------------------
 
 --
@@ -131,6 +183,13 @@ CREATE TABLE `facilitystatus` (
   `P_ID` int(11) NOT NULL,
   `Fac_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `facilitystatus`
+--
+
+INSERT INTO `facilitystatus` (`P_ID`, `Fac_ID`) VALUES
+(8, 2);
 
 -- --------------------------------------------------------
 
@@ -150,7 +209,8 @@ CREATE TABLE `manager` (
 --
 
 INSERT INTO `manager` (`Emp_ID`, `Department`, `Username`, `password`) VALUES
-(39, 'GASTRONOMY', 'asd', 'asd');
+(1, 'EVENTS', 'event', 'evemt'),
+(4, 'GASTRONOMY', 'gastronomy', 'gastronomy');
 
 -- --------------------------------------------------------
 
@@ -160,7 +220,6 @@ INSERT INTO `manager` (`Emp_ID`, `Department`, `Username`, `password`) VALUES
 
 CREATE TABLE `package` (
   `P_ID` int(11) NOT NULL,
-  `Name` varchar(25) NOT NULL,
   `no_of_ppl` int(11) NOT NULL,
   `B_Date` date NOT NULL,
   `S_Date` date NOT NULL,
@@ -169,6 +228,14 @@ CREATE TABLE `package` (
   `Cust_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `package`
+--
+
+INSERT INTO `package` (`P_ID`, `no_of_ppl`, `B_Date`, `S_Date`, `E_Date`, `Price`, `Cust_ID`) VALUES
+(7, 4, '2017-11-23', '2017-11-23', '2017-11-30', 505, 9),
+(8, 4, '2017-11-23', '2017-11-23', '2017-11-30', 705, 9);
+
 -- --------------------------------------------------------
 
 --
@@ -176,8 +243,8 @@ CREATE TABLE `package` (
 --
 
 CREATE TABLE `payroll` (
-  `Emp` varchar(5) NOT NULL,
-  `Mgr` varchar(5) NOT NULL,
+  `Emp` int(5) NOT NULL,
+  `Mgr` int(5) NOT NULL,
   `Pay_Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -202,7 +269,19 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`CNIC`, `FNAME`, `LNAME`, `Address`, `PhoneNumber`, `Email`, `CreditCardNo`) VALUES
-('b', 'bilal ', 'bilal', 'asd', '123', 'aa@gmail.com', NULL);
+('11111-1111111-1', 'ahmed ', 'bilal', 'bjasjb', '1234', 'a@gmail.com', NULL),
+('1221', 'ba', '1235', 'abcdefg', '1324', 'bi@gmail.com', '4567'),
+('12212-1111111-1', 'qwe ', 'qwe', 'qwe', '1234', 'a@gmail.com', NULL),
+('123', 'as ', 'd', 'werasdf', '6456', 'asdf@asdf.dfg', '13533'),
+('1234', 'muhamamd ', 'ahmed', 'GOthIXmail', '123456', 'a@gmail.com', '11111'),
+('1235', 'ab', 'ba', 'abcdefg', '1324', 'bi@gmail.com', '4567'),
+('22222-2222222-2', 'asdfg ', 'bilal', 'qwe', '123', 'a@gmail.com', NULL),
+('34', 'b ', 's', 'a', '43', 'a@gmail.com', '121'),
+('44444-4444444-4', 'bnm ', 'bnm', 'bnm', '123', 'a@gmail.com', NULL),
+('4564632', 'asd ', 'asd', 'asd', '546132', 'add@asdf.cm', '98762130'),
+('88888-8888888-8', 'b ', 'b', 'asdfg', '1234', 'a@gmail.com', NULL),
+('ab', 'ba', '1235', 'abcdefg', '1324', 'bi@gmail.com', '4567'),
+('asad', 'ahmed ', 'bilal', '1234', '1234', 'a@gmail.com', '121212');
 
 -- --------------------------------------------------------
 
@@ -222,7 +301,12 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`Room_ID`, `Type`, `Capacity`, `Cost`) VALUES
-(1, 'Normal', 12, 1234);
+(1, 'Hall', 400, 800),
+(2, 'Hall', 800, 500),
+(3, 'Hall', 1300, 650),
+(4, 'Suite', 6, 75),
+(5, 'Suite', 5, 70),
+(6, 'Normal', 123, 321);
 
 -- --------------------------------------------------------
 
@@ -234,6 +318,14 @@ CREATE TABLE `roomstatus` (
   `P_ID` int(11) NOT NULL,
   `Room_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roomstatus`
+--
+
+INSERT INTO `roomstatus` (`P_ID`, `Room_ID`) VALUES
+(7, 5),
+(8, 4);
 
 -- --------------------------------------------------------
 
@@ -247,6 +339,15 @@ CREATE TABLE `service` (
   `Cost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `service`
+--
+
+INSERT INTO `service` (`Ser_ID`, `Name`, `Cost`) VALUES
+(1, 'Valet Service', 25),
+(2, 'Room Cleaning', 40),
+(3, 'Food Service', 15);
+
 -- --------------------------------------------------------
 
 --
@@ -257,6 +358,13 @@ CREATE TABLE `servicestatus` (
   `P_ID` int(11) NOT NULL,
   `Ser_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `servicestatus`
+--
+
+INSERT INTO `servicestatus` (`P_ID`, `Ser_ID`) VALUES
+(7, 3);
 
 --
 -- Indexes for dumped tables
@@ -273,19 +381,21 @@ ALTER TABLE `company`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`Cust_ID`),
-  ADD UNIQUE KEY `CNIC` (`CNIC`);
+  ADD KEY `CNIC` (`CNIC`);
 
 --
 -- Indexes for table `customer_company`
 --
 ALTER TABLE `customer_company`
-  ADD PRIMARY KEY (`Cust_ID`,`Company`);
+  ADD PRIMARY KEY (`Cust_ID`,`Company`),
+  ADD KEY `Company` (`Company`);
 
 --
 -- Indexes for table `dining`
 --
 ALTER TABLE `dining`
-  ADD PRIMARY KEY (`Res_ID`);
+  ADD PRIMARY KEY (`Res_ID`),
+  ADD KEY `Cust_ID` (`Cust_ID`);
 
 --
 -- Indexes for table `employee`
@@ -298,7 +408,9 @@ ALTER TABLE `employee`
 -- Indexes for table `event`
 --
 ALTER TABLE `event`
-  ADD PRIMARY KEY (`Event_ID`);
+  ADD PRIMARY KEY (`Event_ID`),
+  ADD KEY `Cust_ID` (`Cust_ID`),
+  ADD KEY `Hall_ID` (`Hall_ID`);
 
 --
 -- Indexes for table `facility`
@@ -310,7 +422,8 @@ ALTER TABLE `facility`
 -- Indexes for table `facilitystatus`
 --
 ALTER TABLE `facilitystatus`
-  ADD PRIMARY KEY (`P_ID`,`Fac_ID`);
+  ADD PRIMARY KEY (`P_ID`,`Fac_ID`),
+  ADD KEY `Fac_ID` (`Fac_ID`);
 
 --
 -- Indexes for table `manager`
@@ -322,13 +435,15 @@ ALTER TABLE `manager`
 -- Indexes for table `package`
 --
 ALTER TABLE `package`
-  ADD PRIMARY KEY (`P_ID`);
+  ADD PRIMARY KEY (`P_ID`),
+  ADD KEY `Cust_ID` (`Cust_ID`);
 
 --
 -- Indexes for table `payroll`
 --
 ALTER TABLE `payroll`
-  ADD PRIMARY KEY (`Emp`,`Mgr`);
+  ADD PRIMARY KEY (`Emp`,`Mgr`),
+  ADD KEY `Mgr` (`Mgr`);
 
 --
 -- Indexes for table `person`
@@ -346,7 +461,8 @@ ALTER TABLE `room`
 -- Indexes for table `roomstatus`
 --
 ALTER TABLE `roomstatus`
-  ADD PRIMARY KEY (`P_ID`,`Room_ID`);
+  ADD PRIMARY KEY (`P_ID`,`Room_ID`),
+  ADD KEY `Room_ID` (`Room_ID`);
 
 --
 -- Indexes for table `service`
@@ -358,7 +474,8 @@ ALTER TABLE `service`
 -- Indexes for table `servicestatus`
 --
 ALTER TABLE `servicestatus`
-  ADD PRIMARY KEY (`P_ID`,`Ser_ID`);
+  ADD PRIMARY KEY (`P_ID`,`Ser_ID`),
+  ADD KEY `Ser_ID` (`Ser_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -368,17 +485,112 @@ ALTER TABLE `servicestatus`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Cust_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Cust_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `dining`
+--
+ALTER TABLE `dining`
+  MODIFY `Res_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `Emp_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `Emp_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `event`
+--
+ALTER TABLE `event`
+  MODIFY `Event_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `facility`
+--
+ALTER TABLE `facility`
+  MODIFY `Fac_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `package`
+--
+ALTER TABLE `package`
+  MODIFY `P_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `Room_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Room_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `service`
+--
+ALTER TABLE `service`
+  MODIFY `Ser_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `customer`
+--
+ALTER TABLE `customer`
+  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`CNIC`) REFERENCES `person` (`CNIC`);
+
+--
+-- Constraints for table `customer_company`
+--
+ALTER TABLE `customer_company`
+  ADD CONSTRAINT `customer_company_ibfk_1` FOREIGN KEY (`Cust_ID`) REFERENCES `customer` (`Cust_ID`),
+  ADD CONSTRAINT `customer_company_ibfk_2` FOREIGN KEY (`Company`) REFERENCES `company` (`name`);
+
+--
+-- Constraints for table `dining`
+--
+ALTER TABLE `dining`
+  ADD CONSTRAINT `dining_ibfk_1` FOREIGN KEY (`Cust_ID`) REFERENCES `customer` (`Cust_ID`);
+
+--
+-- Constraints for table `event`
+--
+ALTER TABLE `event`
+  ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`Cust_ID`) REFERENCES `customer` (`Cust_ID`),
+  ADD CONSTRAINT `event_ibfk_2` FOREIGN KEY (`Hall_ID`) REFERENCES `room` (`Room_ID`);
+
+--
+-- Constraints for table `facilitystatus`
+--
+ALTER TABLE `facilitystatus`
+  ADD CONSTRAINT `facilitystatus_ibfk_2` FOREIGN KEY (`Fac_ID`) REFERENCES `facility` (`Fac_ID`),
+  ADD CONSTRAINT `facilitystatus_ibfk_3` FOREIGN KEY (`P_ID`) REFERENCES `package` (`P_ID`);
+
+--
+-- Constraints for table `manager`
+--
+ALTER TABLE `manager`
+  ADD CONSTRAINT `manager_ibfk_1` FOREIGN KEY (`Emp_ID`) REFERENCES `employee` (`Emp_ID`);
+
+--
+-- Constraints for table `package`
+--
+ALTER TABLE `package`
+  ADD CONSTRAINT `package_ibfk_1` FOREIGN KEY (`Cust_ID`) REFERENCES `customer` (`Cust_ID`);
+
+--
+-- Constraints for table `payroll`
+--
+ALTER TABLE `payroll`
+  ADD CONSTRAINT `payroll_ibfk_1` FOREIGN KEY (`Emp`) REFERENCES `employee` (`Emp_ID`),
+  ADD CONSTRAINT `payroll_ibfk_2` FOREIGN KEY (`Mgr`) REFERENCES `manager` (`Emp_ID`);
+
+--
+-- Constraints for table `roomstatus`
+--
+ALTER TABLE `roomstatus`
+  ADD CONSTRAINT `roomstatus_ibfk_2` FOREIGN KEY (`Room_ID`) REFERENCES `room` (`Room_ID`),
+  ADD CONSTRAINT `roomstatus_ibfk_3` FOREIGN KEY (`P_ID`) REFERENCES `package` (`P_ID`);
+
+--
+-- Constraints for table `servicestatus`
+--
+ALTER TABLE `servicestatus`
+  ADD CONSTRAINT `servicestatus_ibfk_2` FOREIGN KEY (`Ser_ID`) REFERENCES `service` (`Ser_ID`),
+  ADD CONSTRAINT `servicestatus_ibfk_3` FOREIGN KEY (`P_ID`) REFERENCES `package` (`P_ID`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
